@@ -60,8 +60,8 @@ public class MyWindow extends JFrame implements ActionListener{
 		this.strpass = passwrod.getText();
 		
 		this.strcode = code.getText();
-		this.dispose();
-		//this.setVisible(false);
+	
+		this.setVisible(false);
 	}
 
 	public String getStrusername() {
@@ -75,6 +75,8 @@ public class MyWindow extends JFrame implements ActionListener{
 	public String getStrcode() {
 		return strcode;
 	}
-	
+	public void close(){
+		this.dispose();
+	}
 	
 }

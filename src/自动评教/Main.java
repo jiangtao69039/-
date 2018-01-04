@@ -11,7 +11,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSelect;
 import com.gargoylesoftware.htmlunit.util.Cookie;
 
-public class main {
+public class Main {
 
 	public static void main(String[] args) throws Exception{
 		System.out.println("网络连接可能较慢，请等待5~10秒--------");
@@ -153,6 +153,7 @@ public class main {
 				break;
 		}
 		 System.out.println("成功！");
+		 window.close();
 	}
 	
 
