@@ -88,30 +88,61 @@ public class Main {
 		// System.out.println(p1.asText());
 		 
 		 boolean finish =false;
+		 int count=0;
 		while (true) {
+			count++;
+			System.out.println("正在评价当前页面------");
+			Thread.sleep(500);
 			System.out.println("开始评价-------------------");
 			HtmlInput submitbtn = (HtmlInput) p1.getElementById("Button1");
 			HtmlInput Button2 = (HtmlInput) p1.getElementById("Button2");
 			String content = Button2.getAttribute("value");
-			if(content.length() <10)
+			if(content.length() <=6)
 				{
 				submitbtn = Button2;
 				finish = true;
 				}
+			if(count>=20)
+			{
+				submitbtn = Button2;
+				finish = true;
+			}
 			DomElement trpjs = p1.getElementById("trPjs");
 			if(trpjs !=null)
-			{DomElement tbody = trpjs.getElementsByTagName("tbody").get(0);
+			{
+				DomElement tbody = trpjs.getElementsByTagName("tbody").get(0);
 			DomNodeList<HtmlElement> trlist = tbody.getElementsByTagName("tr");
 
+			boolean yiban=true;
+			boolean yiban4=true;
 			for (int i = 1; i < trlist.getLength(); i++) {
+				
+				boolean continueFlag = false;
+				boolean continueFlag4 = false;
+				
 				HtmlElement tr = trlist.get(i);
+				HtmlElement td=null;
 				// System.out.println(tr.getElementsByTagName("td").get(0).getTextContent());
-				HtmlElement td = tr.getElementsByTagName("td").get(3);
+				try
+				{
+					 td = tr.getElementsByTagName("td").get(3);	
+				}
+				catch(IndexOutOfBoundsException e) {
+					System.out.println("indexOutofBounds Exception-------");
+					continueFlag = true;
+					
+				}
+				if(continueFlag)
+					{
+						continue;
+					}
 				HtmlSelect select = (HtmlSelect) td.getElementsByTagName(
 						"select").get(0);
 				HtmlOption option = null;
-				if (i == 1) {
+				if (i == 1 || yiban) {
 					option = select.getOption(2);
+					
+					yiban=false;
 					// System.out.println(option.getValueAttribute()+option.getTextContent());
 					option.click();
 				} else {
@@ -120,28 +151,109 @@ public class Main {
 					option.click();
 				}
 
+				////////////////
+				
+				
+				HtmlElement td4=null;
+				try {
+					td4 = tr.getElementsByTagName("td").get(4);	
+				}catch(IndexOutOfBoundsException e) {
+					System.out.println("indexOutofBounds Exception-------no td4");
+					continueFlag4=true;
+				}
+				if(continueFlag4)
+				{
+				continue;
+				}
+				
+				HtmlSelect select4 = (HtmlSelect) td4.getElementsByTagName(
+						"select").get(0);
+				HtmlOption option4 = null;
+				
+				if (i == 1 || yiban4) {
+					option4 = select4.getOption(2);
+					
+					yiban4=false;
+					// System.out.println(option.getValueAttribute()+option.getTextContent());
+					option4.click();
+				} else {
+					option4 = select4.getOption(1);
+					// System.out.println(option.getValueAttribute()+option.getTextContent());
+					option4.click();
+				}
 			}
 			}
+			
+			
 			DomElement trpkc = p1.getElementById("trPkc");
 			if(trpkc!=null)
-			{DomElement tbodykc = trpkc.getElementsByTagName("tbody").get(0);
+			{
+				
+			DomElement tbodykc = trpkc.getElementsByTagName("tbody").get(0);
 			DomNodeList<HtmlElement> trlistkc = tbodykc
 					.getElementsByTagName("tr");
+			
+			boolean yiban=true;
+			boolean yiban4=true;
 			for (int i = 1; i < trlistkc.getLength(); i++) {
+				boolean continueFlag = false;
+				boolean continueFlag4 = false;
+				
 				HtmlElement tr = trlistkc.get(i);
+				HtmlElement td=null;
 				// System.out.println(tr.getElementsByTagName("td").get(0).getTextContent());
-				HtmlElement td = tr.getElementsByTagName("td").get(3);
+				
+				try {
+					 td = tr.getElementsByTagName("td").get(3);	
+				}catch(IndexOutOfBoundsException e) {
+					System.out.println("indexOutofBounds Exception-------");
+					continueFlag = true;
+				}
+				if(continueFlag)
+					{
+					continue;
+					}
+				
 				HtmlSelect select = (HtmlSelect) td.getElementsByTagName(
 						"select").get(0);
 				HtmlOption option = null;
-				if (i == 1) {
+				if (i == 1 || yiban) {
 					option = select.getOption(2);
+					
+					yiban=false;
 					// System.out.println(option.getValueAttribute()+option.getTextContent());
 					option.click();
 				} else {
 					option = select.getOption(1);
 					// System.out.println(option.getValueAttribute()+option.getTextContent());
 					option.click();
+				}
+				HtmlElement td4=null;
+				try {
+					td4 = tr.getElementsByTagName("td").get(4);	
+				}catch(IndexOutOfBoundsException e) {
+					System.out.println("indexOutofBounds Exception-------no td4");
+					continueFlag4=true;
+				}
+				if(continueFlag4)
+				{
+				continue;
+				}
+				
+				HtmlSelect select4 = (HtmlSelect) td4.getElementsByTagName(
+						"select").get(0);
+				HtmlOption option4 = null;
+				
+				if (i == 1 || yiban4) {
+					option4 = select4.getOption(2);
+					
+					yiban4=false;
+					// System.out.println(option.getValueAttribute()+option.getTextContent());
+					option4.click();
+				} else {
+					option4 = select4.getOption(1);
+					// System.out.println(option.getValueAttribute()+option.getTextContent());
+					option4.click();
 				}
 			}
 			}
@@ -149,8 +261,11 @@ public class Main {
 			p1=submitbtn.click();
 			//Thread.sleep(1000);
 			System.out.println("填完一个页面-----------");
+			
+			
 			if(finish)
 				break;
+		
 		}
 		 System.out.println("成功！");
 		 window.close();
